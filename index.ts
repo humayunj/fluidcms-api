@@ -10,8 +10,11 @@ let f = new FluidCMS("616215249838a720d007bb4a");
 
 (async () => {
   try {
-    await f.deleteModel("616b4860efc4ebbd041fcddb");
-    console.log(await f.getModel("616b4860efc4ebbd041fcddb"));
+    let modelId = await f.createModel({
+      title: "My Model",
+      identifier: "my_model",
+    });
+    console.log(modelId);
   } catch (er) {
     console.log(er);
   }

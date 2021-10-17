@@ -1,16 +1,7 @@
-import { API } from "./API";
+import { API, APIResponseError } from "./API";
+import { IModelField } from "./field";
 
-export enum ModelFieldType {
-  Unkown = -1,
-  Text = 0,
-}
 
-export interface IModelField {
-  uid: string;
-  title: string;
-  identifier: string;
-  type: ModelFieldType;
-}
 
 export interface IModel {
   uid: string;
@@ -78,6 +69,23 @@ export async function updateModel(
       alias: fieldsData.identifier,
     } as any);
     return true;
+  } catch (er) {
+    throw er;
+  }
+}
+
+export async function createModel(
+  projectID: string,
+  fieldsData: Omit<IModel, "uid" | "fields">
+): Promise<string> {
+  try {
+    let data = await API.post("/model", {
+      name: fieldsData.title,
+      alias: fieldsData.identifier,
+      project_id: projectID,
+    } as any);
+    if (!data.model_id) throw new APIResponseError("Something went wrong");
+    return data.model_id;
   } catch (er) {
     throw er;
   }
