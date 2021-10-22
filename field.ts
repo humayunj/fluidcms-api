@@ -12,7 +12,10 @@ export interface IModelField {
   type: ModelFieldType;
 }
 
-export async function getField(uid: string): Promise<IModelField> {
+export async function getField(
+  token: string,
+  uid: string
+): Promise<IModelField> {
   try {
     let data = await API.get(`/field/${uid}`);
 
@@ -28,9 +31,16 @@ export async function getField(uid: string): Promise<IModelField> {
     throw er;
   }
 }
-export async function deleteField(uid: string): Promise<boolean> {
+export async function deleteField(
+  token: string,
+  uid: string
+): Promise<boolean> {
   try {
-    let data = await API.delete(`/field/${uid}`);
+    let data = await API.delete(`/field/${uid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return true;
   } catch (er) {
@@ -39,17 +49,26 @@ export async function deleteField(uid: string): Promise<boolean> {
 }
 
 export async function createField(
+  token: string,
   modelID: string,
   fieldsData: Omit<IModelField, "uid">
 ): Promise<IModelField> {
   try {
-    let data = await API.post(`/field`, {
-      model_id: modelID,
-      alias: fieldsData.identifier,
-      name: fieldsData.title,
-      field_type: fieldsData.type,
-      regex_exp: [],
-    } as any);
+    let data = await API.post(
+      `/field`,
+      {
+        model_id: modelID,
+        alias: fieldsData.identifier,
+        name: fieldsData.title,
+        field_type: fieldsData.type,
+        regex_exp: [],
+      } as any,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return {
       uid: data.field_id,
@@ -62,16 +81,25 @@ export async function createField(
   }
 }
 export async function updateField(
+  token: string,
   fieldID: string,
   fieldsData: Partial<Omit<IModelField, "uid">>
 ): Promise<boolean> {
   try {
-    let data = await API.patch(`/field${fieldID}`, {
-      alias: fieldsData.identifier,
-      name: fieldsData.title,
-      field_type: fieldsData.type,
-      regex_exp: [],
-    } as any);
+    let data = await API.patch(
+      `/field/${fieldID}`,
+      {
+        alias: fieldsData.identifier,
+        name: fieldsData.title,
+        field_type: fieldsData.type,
+        regex_exp: [],
+      } as any,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return true;
   } catch (er) {

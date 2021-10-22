@@ -1,6 +1,6 @@
 import { FluidCMS } from "./lib";
 
-let f = new FluidCMS("616215249838a720d007bb4a");
+let f = new FluidCMS("AU_OD0CblrGopv1uuEB1j");
 
 // f.getModels()
 //   .then((models) => {
@@ -10,11 +10,8 @@ let f = new FluidCMS("616215249838a720d007bb4a");
 
 (async () => {
   try {
-    let modelId = await f.createModel({
-      title: "My Model",
-      identifier: "my_model",
-    });
-    console.log(modelId);
+    let r = await f.getAllRecords("616ee0b02ab26775ef1f877f");
+    console.log(r);
   } catch (er) {
     console.log(er);
   }

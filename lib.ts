@@ -7,6 +7,14 @@ import {
   deleteModel,
   createModel as _createModel,
 } from "./model";
+import {
+  createRecord,
+  deleteMultipleRecords,
+  deleteRecord,
+  getRecord,
+  getRecords,
+  updateRecord,
+} from "./record";
 
 export class FluidCMS {
   token: string;
@@ -20,11 +28,14 @@ export class FluidCMS {
    * @returns Promise whic resolve to IModel or rejected with APIResponseError
    */
   getModel(uid: string): ReturnType<typeof getModel> {
-    return getModel(uid);
+    return getModel(this.token, uid);
   }
 
-  updateModel: typeof updateModel = (modelUID, fieldsData) => {
-    return updateModel(modelUID, fieldsData);
+  updateModel = (
+    modelUID: string,
+    fieldsData: Parameters<typeof updateModel>[2]
+  ) => {
+    return updateModel(this.token, modelUID, fieldsData);
   };
 
   createModel(
@@ -33,36 +44,65 @@ export class FluidCMS {
     return _createModel(this.token, fieldsData);
   }
 
-  deleteModel: typeof deleteModel = (modelUID) => {
-    return deleteModel(modelUID);
+  deleteModel = (modelUID: string) => {
+    return deleteModel(this.token, modelUID);
   };
 
   getModels(): ReturnType<typeof getModels> {
-    return getModels(this.token);
+    return getModels(this.token, this.token);
   }
 
   createField(
-    modelID: Parameters<typeof createField>[0],
-    fieldsData: Parameters<typeof createField>[1]
+    modelID: Parameters<typeof createField>[1],
+    fieldsData: Parameters<typeof createField>[2]
   ): ReturnType<typeof createField> {
-    return createField(modelID, fieldsData);
+    return createField(this.token, modelID, fieldsData);
   }
   updateField(
-    fieldID: Parameters<typeof updateField>[0],
-    fieldsData: Parameters<typeof updateField>[1]
+    fieldID: Parameters<typeof updateField>[1],
+    fieldsData: Parameters<typeof updateField>[2]
   ): ReturnType<typeof updateField> {
-    return updateField(fieldID, fieldsData);
+    return updateField(this.token, fieldID, fieldsData);
   }
 
   getField(
-    fieldID: Parameters<typeof getField>[0]
+    fieldID: Parameters<typeof getField>[1]
   ): ReturnType<typeof getField> {
-    return getField(fieldID);
+    return getField(this.token, fieldID);
   }
 
   deleteField(
-    fieldID: Parameters<typeof deleteField>[0]
+    fieldID: Parameters<typeof deleteField>[1]
   ): ReturnType<typeof deleteField> {
-    return deleteField(fieldID);
+    return deleteField(this.token, fieldID);
+  }
+
+  createRecord(
+    modelUID: string,
+    fieldsData: Parameters<typeof createRecord>[2]
+  ): ReturnType<typeof createRecord> {
+    return createRecord(this.token, modelUID, fieldsData);
+  }
+  updateRecord(
+    recordIUD: string,
+    fieldsData: Parameters<typeof updateRecord>[2]
+  ): ReturnType<typeof updateRecord> {
+    return updateRecord(this.token, recordIUD, fieldsData);
+  }
+
+  deleteRecord(recordUID: string): ReturnType<typeof deleteRecord> {
+    return deleteRecord(this.token, recordUID);
+  }
+  deleteMultipleRecords(
+    recordUID: string[]
+  ): ReturnType<typeof deleteMultipleRecords> {
+    return deleteMultipleRecords(this.token, recordUID);
+  }
+
+  getRecord(recordUID: string): ReturnType<typeof getRecord> {
+    return getRecord(this.token, recordUID);
+  }
+  getAllRecords(modelUID: string): ReturnType<typeof getRecords> {
+    return getRecords(this.token, modelUID);
   }
 }

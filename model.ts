@@ -1,8 +1,6 @@
 import { API, APIResponseError } from "./API";
 import { IModelField } from "./field";
 
-
-
 export interface IModel {
   uid: string;
   title: string;
@@ -10,9 +8,13 @@ export interface IModel {
   fields: IModelField[] | null;
 }
 
-export async function getModel(uid: string): Promise<IModel> {
+export async function getModel(token: string, uid: string): Promise<IModel> {
   try {
-    let data = await API.get(`/model/${uid}`);
+    let data = await API.get(`/model/${uid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const m = data.model;
 
     let respModel: IModel = {
@@ -33,9 +35,13 @@ export async function getModel(uid: string): Promise<IModel> {
   }
 }
 
-export async function getModels(projectId: string) {
+export async function getModels(token: string, projectId: string) {
   try {
-    let data = await API.get(`/model/all/${projectId}`);
+    let data = await API.get(`/model/all`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const models = data.models;
 
@@ -60,14 +66,23 @@ export async function getModels(projectId: string) {
 }
 
 export async function updateModel(
+  token: string,
   modelUID: string,
   fieldsData: Partial<Omit<IModel, "uid" | "fields">>
 ): Promise<boolean> {
   try {
-    let data = await API.patch("/model/" + modelUID, {
-      name: fieldsData.title,
-      alias: fieldsData.identifier,
-    } as any);
+    let data = await API.patch(
+      "/model/" + modelUID,
+      {
+        name: fieldsData.title,
+        alias: fieldsData.identifier,
+      } as any,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return true;
   } catch (er) {
     throw er;
@@ -75,15 +90,22 @@ export async function updateModel(
 }
 
 export async function createModel(
-  projectID: string,
+  token: string,
   fieldsData: Omit<IModel, "uid" | "fields">
 ): Promise<string> {
   try {
-    let data = await API.post("/model", {
-      name: fieldsData.title,
-      alias: fieldsData.identifier,
-      project_id: projectID,
-    } as any);
+    let data = await API.post(
+      "/model",
+      {
+        name: fieldsData.title,
+        alias: fieldsData.identifier,
+      } as any,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (!data.model_id) throw new APIResponseError("Something went wrong");
     return data.model_id;
   } catch (er) {
@@ -91,9 +113,16 @@ export async function createModel(
   }
 }
 
-export async function deleteModel(modelUID: string): Promise<boolean> {
+export async function deleteModel(
+  token: string,
+  modelUID: string
+): Promise<boolean> {
   try {
-    let data = await API.delete("/model/" + modelUID);
+    let data = await API.delete("/model/" + modelUID, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return true;
   } catch (er) {
     throw er;
