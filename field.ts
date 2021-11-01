@@ -10,6 +10,10 @@ export interface IModelField {
   title: string;
   identifier: string;
   type: ModelFieldType;
+  validation: {
+    isRequired: boolean;
+    regex: string;
+  };
 }
 
 export async function getField(
@@ -25,6 +29,10 @@ export async function getField(
       title: m.name,
       identifier: m.alias,
       type: m.field_type,
+      validation: {
+        isRequired: m.regex || false,
+        regex: m.regex || "",
+      },
     };
     return respField;
   } catch (er) {
@@ -61,7 +69,10 @@ export async function createField(
         alias: fieldsData.identifier,
         name: fieldsData.title,
         field_type: fieldsData.type,
-        regex_exp: [],
+        validation: {
+          isRquired: fieldsData.validation.isRequired,
+          regex: fieldsData.validation.regex,
+        },
       } as any,
       {
         headers: {
@@ -75,6 +86,7 @@ export async function createField(
       identifier: fieldsData.identifier,
       title: fieldsData.title,
       type: fieldsData.type,
+      validation: fieldsData.validation,
     };
   } catch (er) {
     throw er;
@@ -92,7 +104,7 @@ export async function updateField(
         alias: fieldsData.identifier,
         name: fieldsData.title,
         field_type: fieldsData.type,
-        regex_exp: [],
+        validation: fieldsData.validation,
       } as any,
       {
         headers: {

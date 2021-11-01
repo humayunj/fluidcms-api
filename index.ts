@@ -12,6 +12,7 @@ let f = new FluidCMS("AU_OD0CblrGopv1uuEB1j");
   try {
     let r = await f.getAllRecords("616ee0b02ab26775ef1f877f");
     console.log(r);
+    
   } catch (er) {
     console.log(er);
   }

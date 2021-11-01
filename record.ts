@@ -113,6 +113,48 @@ export async function createRecord(
     throw er;
   }
 }
+interface ImageType {
+  url: string;
+  cdn_id: string;
+}
+export async function uploadRecordImage(token: string, image: File) {
+  let fd = new FormData();
+  fd.append("image", image);
+
+  try {
+    let data = await API.post("/image", fd, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return {
+      uid: data._id as string,
+      sm: data.sm as ImageType,
+      md: data.md as ImageType,
+      raw: data.raw as ImageType,
+    };
+  } catch (er) {
+    throw er;
+  }
+}
+
+export async function getMedia(token: string, mediaID: string) {
+  try {
+    let data = await API.get("/media/" + mediaID, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return {
+      uid: data._id as string,
+      sm: data.sm as ImageType,
+      md: data.md as ImageType,
+      raw: data.raw as ImageType,
+    };
+  } catch (er) {
+    throw er;
+  }
+}
 
 export async function deleteRecord(
   token: string,

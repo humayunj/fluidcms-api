@@ -26,6 +26,10 @@ export async function getModel(token: string, uid: string): Promise<IModel> {
         name: f.name,
         identifier: f.alias,
         type: f.field_type,
+        validation: {
+          isRequired: f.validation.isRquired || false,
+          regex: f.validation.regex || "",
+        },
       })),
     };
 
@@ -56,6 +60,10 @@ export async function getModels(token: string, projectId: string) {
           title: f.name,
           identifier: f.alias,
           type: f.field_type,
+          validation: {
+            isRequired: f.validation.isRquired || false,
+            regex: f.validation.regex || "",
+          },
         })),
       });
     }

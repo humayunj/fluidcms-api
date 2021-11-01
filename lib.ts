@@ -11,9 +11,11 @@ import {
   createRecord,
   deleteMultipleRecords,
   deleteRecord,
+  getMedia,
   getRecord,
   getRecords,
   updateRecord,
+  uploadRecordImage,
 } from "./record";
 
 export class FluidCMS {
@@ -97,6 +99,13 @@ export class FluidCMS {
     recordUID: string[]
   ): ReturnType<typeof deleteMultipleRecords> {
     return deleteMultipleRecords(this.token, recordUID);
+  }
+
+  uploadRecordImage(image: File): ReturnType<typeof uploadRecordImage> {
+    return uploadRecordImage(this.token, image);
+  }
+  getMedia(mediaID: string): ReturnType<typeof getMedia> {
+    return getMedia(this.token, mediaID);
   }
 
   getRecord(recordUID: string): ReturnType<typeof getRecord> {

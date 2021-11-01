@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
-export const URL = `https://picaso-cms.herokuapp.com`;
+export const URL = `https://api-fluidcms.herokuapp.com`;
 
 export class APIResponseError extends Error {
   code: number;
@@ -26,7 +26,7 @@ export const API = {
           if (!data.ok || !data.data) {
             reject(
               new APIResponseError(
-                data.error || "Unknwon API response error",
+                data?.error || "Unknwon API response error",
                 500
               )
             );
@@ -36,7 +36,7 @@ export const API = {
         .catch((er: AxiosError) => {
           reject(
             new APIResponseError(
-              ((er.response?.data as any).error as string) ||
+              ((er.response?.data as any)?.error as string) ||
                 (er.response?.data as string) ||
                 er.message,
               er.response?.status || 500
@@ -45,11 +45,7 @@ export const API = {
         });
     });
   },
-  put(
-    uri: string,
-    data?: AxiosRequestConfig,
-    config?: AxiosRequestConfig<any>
-  ): Promise<any> {
+  put(uri: string, data?: any, config?: AxiosRequestConfig<any>): Promise<any> {
     return new Promise((resolve, reject) => {
       axios
         .put(URL + uri, data, config)
@@ -58,7 +54,7 @@ export const API = {
           if (!data.ok || !data.data) {
             reject(
               new APIResponseError(
-                data.error || "Unknwon API response error",
+                data?.error || "Unknwon API response error",
                 500
               )
             );
@@ -68,7 +64,7 @@ export const API = {
         .catch((er: AxiosError) => {
           reject(
             new APIResponseError(
-              ((er.response?.data as any).error as string) ||
+              ((er.response?.data as any)?.error as string) ||
                 (er.response?.data as string) ||
                 er.message,
               er.response?.status || 500
@@ -79,7 +75,7 @@ export const API = {
   },
   post(
     uri: string,
-    data?: AxiosRequestConfig,
+    data?: any,
     config?: AxiosRequestConfig<any>
   ): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -90,7 +86,7 @@ export const API = {
           if (!data.ok || !data.data) {
             reject(
               new APIResponseError(
-                (data.error as string) || "Unknwon API response error",
+                (data?.error as string) || "Unknwon API response error",
                 500
               )
             );
@@ -100,7 +96,7 @@ export const API = {
         .catch((er: AxiosError) => {
           reject(
             new APIResponseError(
-              ((er.response?.data as any).error as string) ||
+              ((er.response?.data as any)?.error as string) ||
                 (er.response?.data as string) ||
                 er.message,
               er.response?.status || 500
@@ -111,7 +107,7 @@ export const API = {
   },
   patch(
     uri: string,
-    data?: AxiosRequestConfig,
+    data?: any,
     config?: AxiosRequestConfig<any>
   ): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -122,7 +118,7 @@ export const API = {
           if (!data.ok || !data.data) {
             reject(
               new APIResponseError(
-                data.error || "Unknwon API response error",
+                data?.error || "Unknwon API response error",
                 500
               )
             );
@@ -132,7 +128,7 @@ export const API = {
         .catch((er: AxiosError) => {
           reject(
             new APIResponseError(
-              ((er.response?.data as any).error as string) ||
+              ((er.response?.data as any)?.error as string) ||
                 (er.response?.data as string) ||
                 er.message,
               er.response?.status || 500
@@ -150,7 +146,7 @@ export const API = {
           if (!data.ok || !data.data) {
             reject(
               new APIResponseError(
-                data.error || "Unknwon API response error",
+                data?.error || "Unknwon API response error",
                 500
               )
             );
@@ -160,7 +156,7 @@ export const API = {
         .catch((er: AxiosError) => {
           reject(
             new APIResponseError(
-              ((er.response?.data as any).error as string) ||
+              ((er.response?.data as any)?.error as string) ||
                 (er.response?.data as string) ||
                 er.message,
               er.response?.status || 500
