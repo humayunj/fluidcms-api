@@ -4,7 +4,7 @@ import { IModel } from "./model";
 
 export interface IRecord {
   uid: string;
-  modelId: IModelField["uid"];
+  modelIdentifier: IModelField["identifier"];
   fields: { fieldId: IModelField["uid"]; value: any }[];
 }
 
@@ -21,7 +21,7 @@ export async function getRecord(
 
     let respRecord: IRecord = {
       uid: uid,
-      modelId: data.model_id,
+      modelIdentifier: data.model_alias,
       fields: data.fields.map((f: any) => ({
         fieldId: f.field_id,
         value: f.value,
@@ -34,9 +34,12 @@ export async function getRecord(
   }
 }
 
-export async function getRecords(token: string, modelUID: IModel["uid"]) {
+export async function getRecords(
+  token: string,
+  modelIdentifier: IModel["identifier"]
+) {
   try {
-    let data = await API.get(`/record/all/${modelUID}`, {
+    let data = await API.get(`/record/all/${modelIdentifier}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -48,7 +51,7 @@ export async function getRecords(token: string, modelUID: IModel["uid"]) {
     for (let m of records) {
       respRecords.push({
         uid: m._id,
-        modelId: modelUID,
+        modelIdentifier: modelIdentifier,
         fields: m.fields.map((f: any) => ({
           fieldId: f.field_id,
           value: f.value,
@@ -89,14 +92,13 @@ export async function updateRecord(
 
 export async function createRecord(
   token: string,
-  modelId: string,
+  modelIdentifier: string,
   fieldsData: IRecord["fields"]
 ): Promise<string> {
   try {
     let data = await API.post(
-      "/record",
+      `/record/${modelIdentifier}`,
       {
-        model_id: modelId,
         fields: fieldsData.map((f, i) => ({
           field_id: f.fieldId,
           value: f.value,

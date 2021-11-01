@@ -29,15 +29,15 @@ export class FluidCMS {
    * @param uid Model Unique ID
    * @returns Promise whic resolve to IModel or rejected with APIResponseError
    */
-  getModel(uid: string): ReturnType<typeof getModel> {
-    return getModel(this.token, uid);
+  getModel(modelIdentifier: string): ReturnType<typeof getModel> {
+    return getModel(this.token, modelIdentifier);
   }
 
   updateModel = (
-    modelUID: string,
+    modelIdentifier: string,
     fieldsData: Parameters<typeof updateModel>[2]
   ) => {
-    return updateModel(this.token, modelUID, fieldsData);
+    return updateModel(this.token, modelIdentifier, fieldsData);
   };
 
   createModel(
@@ -46,8 +46,8 @@ export class FluidCMS {
     return _createModel(this.token, fieldsData);
   }
 
-  deleteModel = (modelUID: string) => {
-    return deleteModel(this.token, modelUID);
+  deleteModel = (modelIdentifier: string) => {
+    return deleteModel(this.token, modelIdentifier);
   };
 
   getModels(): ReturnType<typeof getModels> {
@@ -55,35 +55,43 @@ export class FluidCMS {
   }
 
   createField(
-    modelID: Parameters<typeof createField>[1],
+    modelIdentifier: Parameters<typeof createField>[1],
     fieldsData: Parameters<typeof createField>[2]
   ): ReturnType<typeof createField> {
-    return createField(this.token, modelID, fieldsData);
+    return createField(this.token, modelIdentifier, fieldsData);
   }
   updateField(
-    fieldID: Parameters<typeof updateField>[1],
-    fieldsData: Parameters<typeof updateField>[2]
+    fieldIdentifier: Parameters<typeof updateField>[1],
+    modelIdentifier: Parameters<typeof updateField>[2],
+    fieldsData: Parameters<typeof updateField>[3]
   ): ReturnType<typeof updateField> {
-    return updateField(this.token, fieldID, fieldsData);
+    return updateField(
+      this.token,
+      fieldIdentifier,
+      modelIdentifier,
+      fieldsData
+    );
   }
 
   getField(
-    fieldID: Parameters<typeof getField>[1]
+    fieldIdentifier: Parameters<typeof getField>[1],
+    modelIdentifier: Parameters<typeof getField>[2]
   ): ReturnType<typeof getField> {
-    return getField(this.token, fieldID);
+    return getField(this.token, fieldIdentifier, modelIdentifier);
   }
 
   deleteField(
-    fieldID: Parameters<typeof deleteField>[1]
+    fieldIdentifier: Parameters<typeof getField>[1],
+    modelIdentifier: Parameters<typeof getField>[2]
   ): ReturnType<typeof deleteField> {
-    return deleteField(this.token, fieldID);
+    return deleteField(this.token, fieldIdentifier, modelIdentifier);
   }
 
   createRecord(
-    modelUID: string,
+    modelIdentifier: string,
     fieldsData: Parameters<typeof createRecord>[2]
   ): ReturnType<typeof createRecord> {
-    return createRecord(this.token, modelUID, fieldsData);
+    return createRecord(this.token, modelIdentifier, fieldsData);
   }
   updateRecord(
     recordIUD: string,
@@ -111,7 +119,7 @@ export class FluidCMS {
   getRecord(recordUID: string): ReturnType<typeof getRecord> {
     return getRecord(this.token, recordUID);
   }
-  getAllRecords(modelUID: string): ReturnType<typeof getRecords> {
-    return getRecords(this.token, modelUID);
+  getAllRecords(modelIdentifier: string): ReturnType<typeof getRecords> {
+    return getRecords(this.token, modelIdentifier);
   }
 }

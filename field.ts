@@ -1,4 +1,5 @@
 import { API } from "./API";
+import { IModel } from "./model";
 
 export enum ModelFieldType {
   Unkown = -1,
@@ -18,10 +19,15 @@ export interface IModelField {
 
 export async function getField(
   token: string,
-  uid: string
+  identifier: string,
+  modelIdentifier: string
 ): Promise<IModelField> {
   try {
-    let data = await API.get(`/field/${uid}`);
+    let data = await API.get(`/field/${identifier}/${modelIdentifier}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const m = data;
     let respField: IModelField = {
@@ -41,10 +47,11 @@ export async function getField(
 }
 export async function deleteField(
   token: string,
-  uid: string
+  identifier: string,
+  modelIdentifier: string
 ): Promise<boolean> {
   try {
-    let data = await API.delete(`/field/${uid}`, {
+    let data = await API.delete(`/field/${identifier}/${modelIdentifier}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -58,14 +65,13 @@ export async function deleteField(
 
 export async function createField(
   token: string,
-  modelID: string,
+  modelIdentifier: string,
   fieldsData: Omit<IModelField, "uid">
 ): Promise<IModelField> {
   try {
     let data = await API.post(
-      `/field`,
+      `/field/${modelIdentifier}`,
       {
-        model_id: modelID,
         alias: fieldsData.identifier,
         name: fieldsData.title,
         field_type: fieldsData.type,
@@ -94,12 +100,13 @@ export async function createField(
 }
 export async function updateField(
   token: string,
-  fieldID: string,
+  fieldIdentifier: string,
+  modelIdentifier: IModel["identifier"],
   fieldsData: Partial<Omit<IModelField, "uid">>
 ): Promise<boolean> {
   try {
     let data = await API.patch(
-      `/field/${fieldID}`,
+      `/field/${fieldIdentifier}/${modelIdentifier}`,
       {
         alias: fieldsData.identifier,
         name: fieldsData.title,
