@@ -5,7 +5,7 @@ import { IModel } from "./model";
 export interface IRecord {
   uid: string;
   modelIdentifier: IModelField["identifier"];
-  fields: { fieldId: IModelField["uid"]; value: any }[];
+  fields: { fieldIdentifier: IModelField["identifier"]; value: any }[];
 }
 
 export async function getRecord(
@@ -52,8 +52,8 @@ export async function getRecords(
       respRecords.push({
         uid: m._id,
         modelIdentifier: modelIdentifier,
-        fields: m.fields.map((f: any) => ({
-          fieldId: f.field_id,
+        fields: m.fields.map((f: IRecord["fields"][0]) => ({
+          field_alias: f.fieldIdentifier,
           value: f.value,
         })),
       });
@@ -74,7 +74,7 @@ export async function updateRecord(
       "/record/" + recordUID,
       {
         fields: fieldsData.map((f, i) => ({
-          field_id: f.fieldId,
+          field_alias: f.fieldIdentifier,
           value: f.value,
         })),
       } as any,
@@ -100,7 +100,7 @@ export async function createRecord(
       `/record/${modelIdentifier}`,
       {
         fields: fieldsData.map((f, i) => ({
-          field_id: f.fieldId,
+          field_alias: f.fieldIdentifier,
           value: f.value,
         })),
       } as any,
