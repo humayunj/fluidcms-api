@@ -94,10 +94,10 @@ export class FluidCMS {
     return createRecord(this.token, modelIdentifier, fieldsData);
   }
   updateRecord(
-    recordIUD: string,
+    recordUID: string,
     fieldsData: Parameters<typeof updateRecord>[2]
   ): ReturnType<typeof updateRecord> {
-    return updateRecord(this.token, recordIUD, fieldsData);
+    return updateRecord(this.token, recordUID, fieldsData);
   }
 
   deleteRecord(recordUID: string): ReturnType<typeof deleteRecord> {

@@ -1,14 +1,19 @@
 {
   "name": "fluidcms-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Javascript wrapper for FluidCMS RestAPI",
   "main": "dist/lib.js",
+  "types": "dist/lib.d.js",
   "scripts": {
-    "test": "tsc && node dist/index.js"
+    "test": "tsc && node dist/index.js",
+    "prepublish": "tsc"
   },
-  "author": "",
+  "author": "Humayun Javed",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.23.0"
+  },
+  "devDependencies": {
+    "typedoc-plugin-markdown": "^3.11.3"
   }
 }

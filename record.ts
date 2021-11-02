@@ -52,8 +52,8 @@ export async function getRecords(
       respRecords.push({
         uid: m._id,
         modelIdentifier: modelIdentifier,
-        fields: m.fields.map((f: IRecord["fields"][0]) => ({
-          field_alias: f.fieldIdentifier,
+        fields: m.fields.map((f: any) => ({
+          fieldIdentifier: f.field_alias,
           value: f.value,
         })),
       });
