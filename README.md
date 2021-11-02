@@ -2,11 +2,20 @@
 
 This package provides wrapper for FluidCMS RestAPI. The aim of the package is to provide Javascript interface and manage RestAPI itself.
 
-## Features 
+## Features
+
 - Typescript support
 - Promise based API
 - Consistent Interface
 - Caching
+
+## Showcase
+
+- Blackstone Photo gallery
+
+  [Website Link](https://black-stone.netlify.com/)
+
+  [Source Code](https://github.com/humayunj/black-stone)
 
 ## Installation
 
@@ -40,7 +49,7 @@ async function getProducts() {
 }
 
 async function createProduct({ name, tag }) {
-    
+
     let productId = await FluidAPI.createRecord('product',[{
         fieldIdentifier:'product_name',
         value:name,
@@ -55,9 +64,7 @@ async function createProduct({ name, tag }) {
 
 ```
 
-
 ## Reference
-
 
 ### Class: FluidCMS
 
@@ -65,31 +72,31 @@ async function createProduct({ name, tag }) {
 
 ### Constructors
 
-- [constructor](FluidCMS.md#constructor)
+- [constructor](#constructor)
 
 ### Properties
 
-- [token](FluidCMS.md#token)
+- [token](#token)
 
 ### Methods
 
-- [createField](FluidCMS.md#createfield)
-- [createModel](FluidCMS.md#createmodel)
-- [createRecord](FluidCMS.md#createrecord)
-- [deleteField](FluidCMS.md#deletefield)
-- [deleteModel](FluidCMS.md#deletemodel)
-- [deleteMultipleRecords](FluidCMS.md#deletemultiplerecords)
-- [deleteRecord](FluidCMS.md#deleterecord)
-- [getAllRecords](FluidCMS.md#getallrecords)
-- [getField](FluidCMS.md#getfield)
-- [getMedia](FluidCMS.md#getmedia)
-- [getModel](FluidCMS.md#getmodel)
-- [getModels](FluidCMS.md#getmodels)
-- [getRecord](FluidCMS.md#getrecord)
-- [updateField](FluidCMS.md#updatefield)
-- [updateModel](FluidCMS.md#updatemodel)
-- [updateRecord](FluidCMS.md#updaterecord)
-- [uploadRecordImage](FluidCMS.md#uploadrecordimage)
+- [createField](#createfield)
+- [createModel](#createmodel)
+- [createRecord](#createrecord)
+- [deleteField](#deletefield)
+- [deleteModel](#deletemodel)
+- [deleteMultipleRecords](#deletemultiplerecords)
+- [deleteRecord](#deleterecord)
+- [getAllRecords](#getallrecords)
+- [getField](#getfield)
+- [getMedia](#getmedia)
+- [getModel](#getmodel)
+- [getModels](#getmodels)
+- [getRecord](#getrecord)
+- [updateField](#updatefield)
+- [updateModel](#updatemodel)
+- [updateRecord](#updaterecord)
+- [uploadRecordImage](#uploadrecordimage)
 
 ## Constructors
 
@@ -99,23 +106,15 @@ async function createProduct({ name, tag }) {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type     |
+| :------ | :------- |
 | `token` | `string` |
-
-#### Defined in
-
-[lib.ts:23](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L23)
 
 ## Properties
 
 ### token
 
 • **token**: `string`
-
-#### Defined in
-
-[lib.ts:22](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L22)
 
 ## Methods
 
@@ -125,20 +124,16 @@ async function createProduct({ name, tag }) {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `modelIdentifier` | `string` |
-| `fieldsData` | `Omit`<`IModelField`, ``"uid"``\> |
+| Name              | Type                            |
+| :---------------- | :------------------------------ |
+| `modelIdentifier` | `string`                        |
+| `fieldsData`      | `Omit`<`IModelField`, `"uid"`\> |
 
 #### Returns
 
 `Promise`<`IModelField`\>
 
-#### Defined in
-
-[lib.ts:57](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L57)
-
-___
+---
 
 ### createModel
 
@@ -146,19 +141,15 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `fieldsData` | `Omit`<`IModel`, ``"uid"`` \| ``"fields"``\> |
+| Name         | Type                                     |
+| :----------- | :--------------------------------------- |
+| `fieldsData` | `Omit`<`IModel`, `"uid"` \| `"fields"`\> |
 
 #### Returns
 
 `Promise`<`string`\>
 
-#### Defined in
-
-[lib.ts:43](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L43)
-
-___
+---
 
 ### createRecord
 
@@ -166,20 +157,16 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `modelIdentifier` | `string` |
-| `fieldsData` | { `fieldIdentifier`: `string` ; `value`: `any`  }[] |
+| Name              | Type                                               |
+| :---------------- | :------------------------------------------------- |
+| `modelIdentifier` | `string`                                           |
+| `fieldsData`      | { `fieldIdentifier`: `string` ; `value`: `any` }[] |
 
 #### Returns
 
 `Promise`<`string`\>
 
-#### Defined in
-
-[lib.ts:90](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L90)
-
-___
+---
 
 ### deleteField
 
@@ -187,8 +174,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name              | Type     |
+| :---------------- | :------- |
 | `fieldIdentifier` | `string` |
 | `modelIdentifier` | `string` |
 
@@ -196,11 +183,7 @@ ___
 
 `Promise`<`boolean`\>
 
-#### Defined in
-
-[lib.ts:83](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L83)
-
-___
+---
 
 ### deleteModel
 
@@ -208,19 +191,15 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name              | Type     |
+| :---------------- | :------- |
 | `modelIdentifier` | `string` |
 
 #### Returns
 
 `Promise`<`boolean`\>
 
-#### Defined in
-
-[lib.ts:49](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L49)
-
-___
+---
 
 ### deleteMultipleRecords
 
@@ -228,19 +207,15 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name        | Type       |
+| :---------- | :--------- |
 | `recordUID` | `string`[] |
 
 #### Returns
 
 `Promise`<`boolean`\>
 
-#### Defined in
-
-[lib.ts:106](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L106)
-
-___
+---
 
 ### deleteRecord
 
@@ -248,19 +223,15 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name        | Type     |
+| :---------- | :------- |
 | `recordUID` | `string` |
 
 #### Returns
 
 `Promise`<`boolean`\>
 
-#### Defined in
-
-[lib.ts:103](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L103)
-
-___
+---
 
 ### getAllRecords
 
@@ -268,19 +239,15 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name              | Type     |
+| :---------------- | :------- |
 | `modelIdentifier` | `string` |
 
 #### Returns
 
 `Promise`<`IRecord`[]\>
 
-#### Defined in
-
-[lib.ts:122](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L122)
-
-___
+---
 
 ### getField
 
@@ -288,8 +255,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name              | Type     |
+| :---------------- | :------- |
 | `fieldIdentifier` | `string` |
 | `modelIdentifier` | `string` |
 
@@ -297,11 +264,7 @@ ___
 
 `Promise`<`IModelField`\>
 
-#### Defined in
-
-[lib.ts:76](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L76)
-
-___
+---
 
 ### getMedia
 
@@ -309,19 +272,15 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type     |
+| :-------- | :------- |
 | `mediaID` | `string` |
 
 #### Returns
 
 `Promise`<`Object`\>
 
-#### Defined in
-
-[lib.ts:115](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L115)
-
-___
+---
 
 ### getModel
 
@@ -331,8 +290,8 @@ Get a model by ID
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name              | Type     |
+| :---------------- | :------- |
 | `modelIdentifier` | `string` |
 
 #### Returns
@@ -341,11 +300,7 @@ Get a model by ID
 
 Promise whic resolve to IModel or rejected with APIResponseError
 
-#### Defined in
-
-[lib.ts:32](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L32)
-
-___
+---
 
 ### getModels
 
@@ -355,11 +310,7 @@ ___
 
 `Promise`<`IModel`[]\>
 
-#### Defined in
-
-[lib.ts:53](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L53)
-
-___
+---
 
 ### getRecord
 
@@ -367,19 +318,15 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name        | Type     |
+| :---------- | :------- |
 | `recordUID` | `string` |
 
 #### Returns
 
 `Promise`<`IRecord`\>
 
-#### Defined in
-
-[lib.ts:119](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L119)
-
-___
+---
 
 ### updateField
 
@@ -387,21 +334,17 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `fieldIdentifier` | `string` |
-| `modelIdentifier` | `string` |
-| `fieldsData` | `Partial`<`Omit`<`IModelField`, ``"uid"``\>\> |
+| Name              | Type                                        |
+| :---------------- | :------------------------------------------ |
+| `fieldIdentifier` | `string`                                    |
+| `modelIdentifier` | `string`                                    |
+| `fieldsData`      | `Partial`<`Omit`<`IModelField`, `"uid"`\>\> |
 
 #### Returns
 
 `Promise`<`boolean`\>
 
-#### Defined in
-
-[lib.ts:63](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L63)
-
-___
+---
 
 ### updateModel
 
@@ -409,20 +352,16 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `modelIdentifier` | `string` |
-| `fieldsData` | `Partial`<`Omit`<`IModel`, ``"uid"`` \| ``"fields"``\>\> |
+| Name              | Type                                                 |
+| :---------------- | :--------------------------------------------------- |
+| `modelIdentifier` | `string`                                             |
+| `fieldsData`      | `Partial`<`Omit`<`IModel`, `"uid"` \| `"fields"`\>\> |
 
 #### Returns
 
 `Promise`<`boolean`\>
 
-#### Defined in
-
-[lib.ts:36](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L36)
-
-___
+---
 
 ### updateRecord
 
@@ -430,20 +369,16 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `recordUID` | `string` |
-| `fieldsData` | { `fieldIdentifier`: `string` ; `value`: `any`  }[] |
+| Name         | Type                                               |
+| :----------- | :------------------------------------------------- |
+| `recordUID`  | `string`                                           |
+| `fieldsData` | { `fieldIdentifier`: `string` ; `value`: `any` }[] |
 
 #### Returns
 
 `Promise`<`boolean`\>
 
-#### Defined in
-
-[lib.ts:96](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L96)
-
-___
+---
 
 ### uploadRecordImage
 
@@ -451,15 +386,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type   |
+| :------ | :----- |
 | `image` | `File` |
 
 #### Returns
 
 `Promise`<`Object`\>
-
-#### Defined in
-
-[lib.ts:112](https://github.com/humayunj/fluidcms-api/blob/3c8c7b0/lib.ts#L112)
-
