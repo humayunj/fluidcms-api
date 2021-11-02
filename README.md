@@ -40,7 +40,8 @@ async function getProducts() {
 }
 
 async function createProduct({ name, tag }) {
-    let models = FluidAPI.createRecord('product',[{
+    
+    let productId = await FluidAPI.createRecord('product',[{
         fieldIdentifier:'product_name',
         value:name,
     },
@@ -48,6 +49,8 @@ async function createProduct({ name, tag }) {
         fieldIdentifier:'product_tag',
         value:tag,
     }]);
+
+    return productId;
 }
 
 ```
