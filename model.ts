@@ -2,7 +2,6 @@ import { API, APIResponseError } from "./API";
 import { IModelField } from "./field";
 
 export interface IModel {
-  uid: string;
   title: string;
   identifier: string;
   fields: IModelField[] | null;
@@ -21,11 +20,9 @@ export async function getModel(
     const m = data.model;
 
     let respModel: IModel = {
-      uid: m._id,
       title: m.name,
       identifier: m.alias,
       fields: m.fields.map((f: any) => ({
-        uid: f._id,
         name: f.name,
         identifier: f.alias,
         type: f.field_type,
@@ -55,11 +52,10 @@ export async function getModels(token: string, projectId: string) {
     let respModels: IModel[] = [];
     for (let m of models) {
       respModels.push({
-        uid: m._id,
         title: m.name,
         identifier: m.alias,
         fields: m.fields.map((f: any) => ({
-          uid: f._id,
+          fieldId: f._id,
           title: f.name,
           identifier: f.alias,
           type: f.field_type,
@@ -79,7 +75,7 @@ export async function getModels(token: string, projectId: string) {
 export async function updateModel(
   token: string,
   identifier: string,
-  fieldsData: Partial<Omit<IModel, "uid" | "fields">>
+  fieldsData: Partial<Omit<IModel, "fields">>
 ): Promise<boolean> {
   try {
     let data = await API.patch(

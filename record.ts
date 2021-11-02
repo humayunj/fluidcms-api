@@ -3,29 +3,28 @@ import { IModelField } from "./field";
 import { IModel } from "./model";
 
 export interface IRecord {
-  uid: string;
+  recordId: string;
   modelIdentifier: IModelField["identifier"];
-  fields: { fieldIdentifier: IModelField["identifier"]; value: any }[];
+  fields: { [fieldIdentifier: string]: string };
 }
 
 export async function getRecord(
   token: string,
-  uid: IRecord["uid"]
+  recordId: IRecord["recordId"]
 ): Promise<IRecord> {
   try {
-    let data = await API.get(`/record/${uid}`, {
+    let data = await API.get(`/record/${recordId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-
     let respRecord: IRecord = {
-      uid: uid,
+      recordId: recordId,
       modelIdentifier: data.model_alias,
-      fields: data.fields.map((f: any) => ({
-        fieldId: f.field_id,
-        value: f.value,
-      })),
+      fields: data.fields.reduce((fieldsMap: any, f: any) => {
+        fieldsMap[f.field_alias] = f.value;
+        return fieldsMap;
+      }, {}),
     };
 
     return respRecord;
@@ -49,13 +48,14 @@ export async function getRecords(
 
     let respRecords: IRecord[] = [];
     for (let m of records) {
+      // console.log(m)
       respRecords.push({
-        uid: m._id,
+        recordId: m._id,
         modelIdentifier: modelIdentifier,
-        fields: m.fields.map((f: any) => ({
-          fieldIdentifier: f.field_alias,
-          value: f.value,
-        })),
+        fields: m.fields.reduce((fieldsMap: any, f: any) => {
+          fieldsMap[f.field_alias] = f.value;
+          return fieldsMap;
+        }, {}),
       });
     }
     return respRecords;
@@ -73,9 +73,9 @@ export async function updateRecord(
     let data = await API.patch(
       "/record/" + recordUID,
       {
-        fields: fieldsData.map((f, i) => ({
-          field_alias: f.fieldIdentifier,
-          value: f.value,
+        fields: Object.keys(fieldsData).map((fieldIdentifier) => ({
+          field_alias: fieldIdentifier,
+          value: fieldsData[fieldIdentifier],
         })),
       } as any,
       {
@@ -99,9 +99,9 @@ export async function createRecord(
     let data = await API.post(
       `/record/${modelIdentifier}`,
       {
-        fields: fieldsData.map((f, i) => ({
-          field_alias: f.fieldIdentifier,
-          value: f.value,
+        fields: Object.keys(fieldsData).map((fieldIdentifier) => ({
+          field_alias: fieldIdentifier,
+          value: fieldsData[fieldIdentifier],
         })),
       } as any,
       {
@@ -160,10 +160,10 @@ export async function getMedia(token: string, mediaID: string) {
 
 export async function deleteRecord(
   token: string,
-  recordUID: string
+  recordID: string
 ): Promise<boolean> {
   try {
-    let data = await API.delete("/record/" + recordUID, {
+    let data = await API.delete("/record/" + recordID, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -175,7 +175,7 @@ export async function deleteRecord(
 }
 export async function deleteMultipleRecords(
   token: string,
-  recordUIDs: string[]
+  recordIDs: string[]
 ): Promise<boolean> {
   try {
     let data = await API.delete("/record", {
@@ -183,7 +183,7 @@ export async function deleteMultipleRecords(
         Authorization: `Bearer ${token}`,
       },
       data: {
-        ids: recordUIDs,
+        ids: recordIDs,
       },
     });
     return true;

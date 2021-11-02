@@ -1,3 +1,5 @@
+fluidcms-api / [Exports](modules.md)
+
 # FluidCMS Javascript Wrapper
 
 This package provides wrapper for FluidCMS RestAPI. The aim of the package is to provide Javascript interface and manage RestAPI itself.

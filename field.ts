@@ -7,7 +7,6 @@ export enum ModelFieldType {
 }
 
 export interface IModelField {
-  uid: string;
   title: string;
   identifier: string;
   type: ModelFieldType;
@@ -31,7 +30,6 @@ export async function getField(
 
     const m = data;
     let respField: IModelField = {
-      uid: m._id,
       title: m.name,
       identifier: m.alias,
       type: m.field_type,
@@ -66,7 +64,7 @@ export async function deleteField(
 export async function createField(
   token: string,
   modelIdentifier: string,
-  fieldsData: Omit<IModelField, "uid">
+  fieldsData: IModelField
 ): Promise<IModelField> {
   try {
     let data = await API.post(
@@ -88,7 +86,6 @@ export async function createField(
     );
 
     return {
-      uid: data.field_id,
       identifier: fieldsData.identifier,
       title: fieldsData.title,
       type: fieldsData.type,
@@ -102,7 +99,7 @@ export async function updateField(
   token: string,
   fieldIdentifier: string,
   modelIdentifier: IModel["identifier"],
-  fieldsData: Partial<Omit<IModelField, "uid">>
+  fieldsData: Partial<IModelField>
 ): Promise<boolean> {
   try {
     let data = await API.patch(

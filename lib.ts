@@ -1,4 +1,3 @@
-import { API } from "./API";
 import { createField, deleteField, getField, updateField } from "./field";
 import {
   getModel,
@@ -18,7 +17,7 @@ import {
   uploadRecordImage,
 } from "./record";
 
-export class FluidCMS {
+class FluidCMSWrapper {
   token: string;
   constructor(token: string) {
     this.token = token;
@@ -87,6 +86,16 @@ export class FluidCMS {
     return deleteField(this.token, fieldIdentifier, modelIdentifier);
   }
 
+  /**
+   * Create a new record of given model identifier, and fields data
+   * @example
+   *  let recordId = await createRecord(product,{ 
+   *        name:"Laptop",category:"electronics" 
+   *      });
+   * @param modelIdentifier
+   * @param fieldsData Fields map
+   * @returns Promise which resolves to Record Id
+   */
   createRecord(
     modelIdentifier: string,
     fieldsData: Parameters<typeof createRecord>[2]
@@ -94,19 +103,19 @@ export class FluidCMS {
     return createRecord(this.token, modelIdentifier, fieldsData);
   }
   updateRecord(
-    recordUID: string,
+    recordID: string,
     fieldsData: Parameters<typeof updateRecord>[2]
   ): ReturnType<typeof updateRecord> {
-    return updateRecord(this.token, recordUID, fieldsData);
+    return updateRecord(this.token, recordID, fieldsData);
   }
 
-  deleteRecord(recordUID: string): ReturnType<typeof deleteRecord> {
-    return deleteRecord(this.token, recordUID);
+  deleteRecord(recordID: string): ReturnType<typeof deleteRecord> {
+    return deleteRecord(this.token, recordID);
   }
   deleteMultipleRecords(
-    recordUID: string[]
+    recordID: string[]
   ): ReturnType<typeof deleteMultipleRecords> {
-    return deleteMultipleRecords(this.token, recordUID);
+    return deleteMultipleRecords(this.token, recordID);
   }
 
   uploadRecordImage(image: File): ReturnType<typeof uploadRecordImage> {
@@ -116,10 +125,17 @@ export class FluidCMS {
     return getMedia(this.token, mediaID);
   }
 
-  getRecord(recordUID: string): ReturnType<typeof getRecord> {
-    return getRecord(this.token, recordUID);
+  getRecord(recordID: string): ReturnType<typeof getRecord> {
+    return getRecord(this.token, recordID);
   }
   getAllRecords(modelIdentifier: string): ReturnType<typeof getRecords> {
     return getRecords(this.token, modelIdentifier);
   }
+}
+
+export default function FluidCMS(projectToken: string) {
+  if (!projectToken) {
+    throw new Error("FluidCMS Project token is invalid");
+  }
+  return new FluidCMSWrapper(projectToken);
 }
