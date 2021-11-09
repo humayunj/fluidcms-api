@@ -1,11 +1,11 @@
 {
   "name": "fluidcms-api",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Javascript wrapper for FluidCMS RestAPI",
   "main": "dist/lib.js",
   "types": "dist/lib.d.js",
   "scripts": {
-    "test": "tsc && node dist/index.js",
+    "test": "tsc && node dist/test.js",
     "prepublish": "tsc"
   },
   "author": "Humayun Javed",
