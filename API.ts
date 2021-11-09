@@ -35,14 +35,7 @@ export const API = {
           resolve(data.data);
         })
         .catch((er: AxiosError) => {
-          reject(
-            new APIResponseError(
-              ((er.response?.data as any)?.error as string) ||
-                (er.response?.data as string) ||
-                er.message,
-              er.response?.status || 500
-            )
-          );
+          reject(ErrorResponse(er));
         });
     });
   },
@@ -63,14 +56,7 @@ export const API = {
           resolve(data.data);
         })
         .catch((er: AxiosError) => {
-          reject(
-            new APIResponseError(
-              ((er.response?.data as any)?.error as string) ||
-                (er.response?.data as string) ||
-                er.message,
-              er.response?.status || 500
-            )
-          );
+          reject(ErrorResponse(er));
         });
     });
   },
@@ -95,14 +81,7 @@ export const API = {
           resolve(data.data);
         })
         .catch((er: AxiosError) => {
-          reject(
-            new APIResponseError(
-              ((er.response?.data as any)?.error as string) ||
-                (er.response?.data as string) ||
-                er.message,
-              er.response?.status || 500
-            )
-          );
+          reject(ErrorResponse(er));
         });
     });
   },
@@ -127,14 +106,7 @@ export const API = {
           resolve(data.data);
         })
         .catch((er: AxiosError) => {
-          reject(
-            new APIResponseError(
-              ((er.response?.data as any)?.error as string) ||
-                (er.response?.data as string) ||
-                er.message,
-              er.response?.status || 500
-            )
-          );
+          reject(ErrorResponse(er));
         });
     });
   },
@@ -155,15 +127,20 @@ export const API = {
           resolve(data.data);
         })
         .catch((er: AxiosError) => {
-          reject(
-            new APIResponseError(
-              ((er.response?.data as any)?.error as string) ||
-                (er.response?.data as string) ||
-                er.message,
-              er.response?.status || 500
-            )
-          );
+          reject(ErrorResponse(er));
         });
     });
   },
+};
+
+// GENERIC ERROR_RESPONSE HELPER FUNCTION
+// TO FOLLOW DRY (don't repeat yourself) RULE.
+
+let ErrorResponse = (er: AxiosError) => {
+  return new APIResponseError(
+    ((er.response?.data as any)?.error as string) ||
+      (er.response?.data as string) ||
+      er.message,
+    er.response?.status || 500
+  );
 };

@@ -1,4 +1,4 @@
-import { API, APIResponseError } from "./API";
+import { API } from "./API";
 import { IModelField } from "./field";
 import { IModel } from "./model";
 
@@ -45,20 +45,23 @@ export async function getRecords(
       },
     });
 
-    const records = data;
+    let records: [{ ["key"]: "value" }] = data;
 
-    let respRecords: IRecord[] = [];
-    for (let m of records) {
-      respRecords.push({
-        uid: m._id,
-        modelIdentifier: modelIdentifier,
-        fields: m.fields.map((f: any) => ({
-          fieldIdentifier: f.field_alias,
-          value: f.value,
-        })),
-      });
-    }
-    return respRecords;
+    // const records = data;
+    // console.log("data - ", data);
+
+    // let respRecords: IRecord[] = [];
+    // for (let m of records) {
+    //   respRecords.push({
+    //     uid: m._id,
+    //     modelIdentifier: modelIdentifier,
+    //     fields: m.fields.map((f: any) => ({
+    //       fieldIdentifier: f.field_alias,
+    //       value: f.value,
+    //     })),
+    //   });
+    // }
+    return records;
   } catch (er) {
     throw er;
   }
