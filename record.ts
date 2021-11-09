@@ -44,7 +44,15 @@ export async function getRecords(
       },
     });
 
-    let records: [{ ['fieldIdentifier']: string }] = data;
+    const records = data;
+    let respRecords: IRecord[] = [];
+    for (let r of records) {
+      respRecords.push({
+        recordId: r.recordID,
+        modelIdentifier: modelIdentifier,
+        fields: r.fields as { ["fieldIdentifier"]: string },
+      });
+    }
 
     // const records = data;
     // console.log("data - ", data);
@@ -60,7 +68,7 @@ export async function getRecords(
     //     })),
     //   });
     // }
-    return records;
+    return respRecords;
   } catch (er) {
     throw er;
   }
