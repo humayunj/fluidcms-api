@@ -44,7 +44,7 @@ export async function getRecords(
       },
     });
 
-    let records: [{ ["key"]: "value" }] = data;
+    let records: [{ ['fieldIdentifier']: string }] = data;
 
     // const records = data;
     // console.log("data - ", data);
