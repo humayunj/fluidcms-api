@@ -21,10 +21,7 @@ export async function getRecord(
     let respRecord: IRecord = {
       recordId: recordId,
       modelIdentifier: data.model_alias,
-      fields: data.fields.reduce((fieldsMap: any, f: any) => {
-        fieldsMap[f.field_alias] = f.value;
-        return fieldsMap;
-      }, {}),
+      fields: data.fields
     };
 
     return respRecord;
@@ -83,10 +80,7 @@ export async function updateRecord(
     let data = await API.patch(
       "/record/" + recordUID,
       {
-        fields: Object.keys(fieldsData).map((fieldIdentifier) => ({
-          field_alias: fieldIdentifier,
-          value: fieldsData[fieldIdentifier],
-        })),
+        fields: fieldsData
       } as any,
       {
         headers: {
@@ -109,10 +103,7 @@ export async function createRecord(
     let data = await API.post(
       `/record/${modelIdentifier}`,
       {
-        fields: Object.keys(fieldsData).map((fieldIdentifier) => ({
-          field_alias: fieldIdentifier,
-          value: fieldsData[fieldIdentifier],
-        })),
+        fields: fieldsData,
       } as any,
       {
         headers: {

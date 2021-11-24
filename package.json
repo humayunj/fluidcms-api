@@ -1,6 +1,6 @@
 {
   "name": "fluidcms-api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Javascript wrapper for FluidCMS RestAPI",
   "main": "dist/lib.js",
   "types": "dist/lib.d.js",
